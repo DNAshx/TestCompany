@@ -18,16 +18,21 @@ namespace Company.SalaryModule.Runner
         /// </summary>
         class EmployeesStorage : IEmployeeStorage
         {
-            internal List<EmployeeBase> Employees { get; set; }
+            private List<EmployeeBase> _employees = new List<EmployeeBase>();
 
             public List<EmployeeBase> GetAllEmployee()
             {
-                return Employees;
+                return _employees;
             }
 
             public EmployeeBase GetEmployeByName(string name)
             {
-                return Employees.FirstOrDefault(e => e.Name.Equals(name));
+                return _employees.FirstOrDefault(e => e.Name.Equals(name));
+            }
+
+            public void SaveEmployee(EmployeeBase employee)
+            {
+                _employees.Add(employee);
             }
         }
 
@@ -37,7 +42,6 @@ namespace Company.SalaryModule.Runner
         {
             //Initializing
             _storage = new EmployeesStorage();
-            _storage.Employees = new List<EmployeeBase>();
 
             //get and add employees to the storage
             var flag = false;
@@ -55,11 +59,11 @@ namespace Company.SalaryModule.Runner
                     flag = result.ToUpper().Equals("N");
                 }
             }
-
-            var service = new EmployeeService(_storage);
+            
+            //var service = new SalaryService(_storage);
 
             //print results
-            DrawResults(service);
+           // DrawResults(service);
 
             Console.ReadLine();
         }
@@ -96,7 +100,7 @@ namespace Company.SalaryModule.Runner
                     if (!flag)
                         mngr.SubordinatesList.Add(GetEmployee());
                 }
-                _storage.Employees.AddRange(mngr.SubordinatesList);
+                mngr.SubordinatesList.ForEach(s => _storage.SaveEmployee(s));
 
                 return mngr;
             }
@@ -113,7 +117,7 @@ namespace Company.SalaryModule.Runner
             if (employee == null)
                 return;
 
-            _storage.Employees?.Add(employee);
+            _storage.SaveEmployee(employee);
         }
 
         private static EmployeeTypeEnum GetEmployeeType()
@@ -197,12 +201,12 @@ namespace Company.SalaryModule.Runner
             return default(T);
         }
 
-        private static void DrawResults(EmployeeService service)
+        private static void DrawResults(SalaryService service)
         {
             //output results
             DrawTable.PrintRow(new string[] { "Name", "Salary", "Start Date", "Type" });
             DrawTable.PrintRow(new string[] { "", "", "", "" });
-            foreach (var empl in _storage.Employees)
+            foreach (var empl in _storage.GetAllEmployee())
             {
                 DrawTable.PrintRow(new string[] { empl.Name,
                     string.Format("{0:0.00}", service.GetActualSalary(empl)),

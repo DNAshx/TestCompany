@@ -52,8 +52,14 @@
     <Compile Include="Constants\LimitsConstants.cs" />
     <Compile Include="Enums\EmployeeTypeEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\EmployeeService.private.cs" />
-    <Compile Include="Services\EmployeeService.public.cs" />
+    <Compile Include="Services\Interfaces\ICompanySalaryService.cs" />
+    <Compile Include="Services\Interfaces\IEmployeeSalaryService.cs" />
+    <Compile Include="Services\Interfaces\IManagerSalaryService.cs" />
+    <Compile Include="Services\Interfaces\ISalesSalaryService.cs" />
+    <Compile Include="Services\SalaryService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
+    <Compile Include="Services\Interfaces\IEmployeeService.cs" />
+    <Compile Include="Storages\EmployeeStorage.cs" />
     <Compile Include="Storages\Interfaces\IEmployeeStorage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
