@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Company.SalaryModule.Services
 {
-    public class SalaryService : ICompanySalaryService, IEmployeeSalaryService, IManagerSalaryService
+    public class SalaryService : ICompanySalaryService, IEmployeeSalaryService, IManagerSalaryService, ISalesSalaryService
     {
         private IEmployeeService _employeeService;
 
@@ -19,7 +19,7 @@ namespace Company.SalaryModule.Services
         public decimal GetSalaryOfAllCompany()
         {
             var salary = 0.0m;
-            _employeeService.GetAllEmployees().ForEach(e => salary += GetActualSalary(e));
+            _employeeService.GetAllEmployees().ForEach(e => salary += GetActualSalaryOfAnyType(e));
 
             return salary;
         }
@@ -30,7 +30,7 @@ namespace Company.SalaryModule.Services
         /// <param name="employee">current employee we looking salary for</param>
         /// <param name="salaryDate">optional: get salary for specific time</param>
         /// <returns></returns>
-        public decimal GetActualSalary(EmployeeBase employee, DateTime? salaryDate = null)
+        public decimal GetActualSalaryOfAnyType(EmployeeBase employee, DateTime? salaryDate = null)
         {
             if (!salaryDate.HasValue)
                 salaryDate = DateTime.Now;
@@ -41,13 +41,13 @@ namespace Company.SalaryModule.Services
             switch (employee.Type)
             {
                 case EmployeeTypeEnum.Employee:
-                    return GetActualSalary(employee as Employee, salaryDate);
+                    return GetEmployeeActualSalary(employee as Employee, salaryDate);
 
                 case EmployeeTypeEnum.Manager:
                     return GetManagerActualSalary(employee as Manager, salaryDate);
 
                 case EmployeeTypeEnum.Sales:
-                    return GetActualSalary(employee as Sales, salaryDate);
+                    return GetSalesActualSalary(employee as Sales, salaryDate);
             }
 
             return employee.BaseSalary;
@@ -144,7 +144,7 @@ namespace Company.SalaryModule.Services
         private decimal GetSubordinatesSalary(List<EmployeeBase> SubordinatesList)
         {
             var sumSalary = 0m;
-            SubordinatesList.ForEach(empl => sumSalary += GetActualSalary(empl));
+            SubordinatesList.ForEach(empl => sumSalary += GetActualSalaryOfAnyType(empl));
 
             return sumSalary;
         }

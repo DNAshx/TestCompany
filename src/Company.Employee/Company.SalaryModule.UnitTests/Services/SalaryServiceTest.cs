@@ -11,7 +11,7 @@ using Xunit;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using XAssert = Xunit.Assert;
 
-namespace Company.SalaryModule.UnitTests
+namespace Company.SalaryModule.UnitTests.Services
 {
     [TestClass]
     public class SalaryServiceTest
@@ -25,7 +25,7 @@ namespace Company.SalaryModule.UnitTests
             _service = new SalaryService(_employeeService);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalaryOfAllCompany_Success()
         {
             //Arrange
@@ -63,7 +63,7 @@ namespace Company.SalaryModule.UnitTests
             Assert.AreEqual(expectedSalary, actualSalary);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalary_Employee_Success()
         {
             //Arrange
@@ -78,13 +78,13 @@ namespace Company.SalaryModule.UnitTests
                 Decimal.Multiply(employee.BaseSalary, AdditionsConstants.EMPL_ADDITION);
 
             //Act
-            var actualSalary = _service.GetActualSalary(employee);
+            var actualSalary = _service.GetActualSalaryOfAnyType(employee);
 
             //Assert
             Assert.AreEqual(expectedSalary, actualSalary);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalary_EmployeeByDate_Success()
         {
             //Arrange
@@ -99,25 +99,25 @@ namespace Company.SalaryModule.UnitTests
                 Decimal.Multiply(employee.BaseSalary, AdditionsConstants.EMPL_ADDITION);
 
             //Act
-            var actualSalary = _service.GetActualSalary(employee, DateTime.Today.AddYears(-2));
+            var actualSalary = _service.GetActualSalaryOfAnyType(employee, DateTime.Today.AddYears(-2));
 
             //Assert
             Assert.AreEqual(expectedSalary, actualSalary);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalary_Employee_Error()
         {
             //Arrange
 
             //Act
-            Action act = () => _service.GetActualSalary((EmployeeBase)null);
+            Action act = () => _service.GetActualSalaryOfAnyType((EmployeeBase)null);
 
             //Assert
             XAssert.Throws<ArgumentNullException>(act);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalary_Manager_Success()
         {
             //Arrange
@@ -141,25 +141,25 @@ namespace Company.SalaryModule.UnitTests
                 Decimal.Multiply(manager.SubordinatesList.First().BaseSalary, AdditionsConstants.MNG_SUBADDITION);
 
             //Act
-            var actualSalary = _service.GetActualSalary(manager);
+            var actualSalary = _service.GetActualSalaryOfAnyType(manager);
 
             //Assert
             Assert.AreEqual(expectedSalary, actualSalary);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalary_Manager_Error()
         {
             //Arrange
 
             //Act
-            Action act = () => _service.GetActualSalary((Manager)null);
+            Action act = () => _service.GetActualSalaryOfAnyType((Manager)null);
 
             //Assert
             XAssert.Throws<ArgumentNullException>(act);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalary_Sales_Success()
         {
             //Arrange
@@ -183,19 +183,19 @@ namespace Company.SalaryModule.UnitTests
                 Decimal.Multiply(sales.SubordinatesList.First().BaseSalary, AdditionsConstants.SLS_SUBADDITION);
 
             //Act
-            var actualSalary = _service.GetActualSalary(sales);
+            var actualSalary = _service.GetActualSalaryOfAnyType(sales);
 
             //Assert
             Assert.AreEqual(expectedSalary, actualSalary);
         }
 
-        [Fact]
+        [TestMethod]
         public void GetActualSalary_Sales_Error()
         {
             //Arrange
 
             //Act
-            Action act = () => _service.GetActualSalary((Sales)null);
+            Action act = () => _service.GetActualSalaryOfAnyType((Sales)null);
 
             //Assert
             XAssert.Throws<ArgumentNullException>(act);

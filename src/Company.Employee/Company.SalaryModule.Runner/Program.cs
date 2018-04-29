@@ -1,69 +1,45 @@
 ﻿using Company.SalaryModule.Classes;
 using Company.SalaryModule.Enums;
-using Company.SalaryModule.Services;
-using Company.SalaryModule.Storages.Interfaces;
+using Company.SalaryModule.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.SalaryModule.Runner
 {
     class Program
     {
-        /// <summary>
-        /// Temprorary storage of IEmployeeStorage to manipulate with temprorary data
-        /// </summary>
-        class EmployeesStorage : IEmployeeStorage
-        {
-            private List<EmployeeBase> _employees = new List<EmployeeBase>();
-
-            public List<EmployeeBase> GetAllEmployee()
-            {
-                return _employees;
-            }
-
-            public EmployeeBase GetEmployeByName(string name)
-            {
-                return _employees.FirstOrDefault(e => e.Name.Equals(name));
-            }
-
-            public void SaveEmployee(EmployeeBase employee)
-            {
-                _employees.Add(employee);
-            }
-        }
-
-        private static EmployeesStorage _storage;
+        private static IoC.IContainer _container;
 
         static void Main(string[] args)
         {
             //Initializing
-            _storage = new EmployeesStorage();
+            var bootstrapper = new EmployeeBootstrapper();
+            _container = bootstrapper.Container;
 
             //get and add employees to the storage
             var flag = false;
             while (!flag)
             {
-                var empl = GetEmployee();
-                AddEmployee(empl);
-
                 //option to add as much employees as you want
-                var result = string.Empty;
-                while (result.ToUpper().Equals("Y") || result.ToUpper().Equals("N"))
+                var result = "";
+                while (!result.ToUpper().Equals("Y") && !result.ToUpper().Equals("N"))
                 {
                     Console.Write("New employee? (Y/N):");
                     result = Console.ReadLine();
                     flag = result.ToUpper().Equals("N");
                 }
+
+                if (flag)
+                    break;
+
+                var empl = GetEmployee();
+                AddEmployee(empl);
             }
             
-            //var service = new SalaryService(_storage);
-
             //print results
-           // DrawResults(service);
+            DrawResults();
 
             Console.ReadLine();
         }
@@ -100,7 +76,9 @@ namespace Company.SalaryModule.Runner
                     if (!flag)
                         mngr.SubordinatesList.Add(GetEmployee());
                 }
-                mngr.SubordinatesList.ForEach(s => _storage.SaveEmployee(s));
+
+                var emplService = _container.Resolve<IEmployeeService>();
+                mngr.SubordinatesList.ForEach(s => emplService.SaveEmployee(s));
 
                 return mngr;
             }
@@ -117,7 +95,8 @@ namespace Company.SalaryModule.Runner
             if (employee == null)
                 return;
 
-            _storage.SaveEmployee(employee);
+            var emplService = _container.Resolve<IEmployeeService>();
+            emplService.SaveEmployee(employee);
         }
 
         private static EmployeeTypeEnum GetEmployeeType()
@@ -128,7 +107,7 @@ namespace Company.SalaryModule.Runner
             {
                 Console.Write($"Select employee type (M)anager, (E)mployee, (S)ales:");
 
-                var emplType = (char)Console.ReadLine().FirstOrDefault();
+                var emplType = Console.ReadLine().FirstOrDefault();
                 switch (Char.ToUpper(emplType))
                 {
                     case 'M':
@@ -142,6 +121,7 @@ namespace Company.SalaryModule.Runner
                 }
 
                 Console.Write($"Incorrect type (M)anager, (E)mployee, (S)ales (Enter - continue, Esq to exit)");
+
                 var key = Console.ReadKey();
                 if (key.Key == ConsoleKey.Escape)
                     return EmployeeTypeEnum.Empty;
@@ -201,19 +181,23 @@ namespace Company.SalaryModule.Runner
             return default(T);
         }
 
-        private static void DrawResults(SalaryService service)
+        private static void DrawResults()
         {
             //output results
             DrawTable.PrintRow(new string[] { "Name", "Salary", "Start Date", "Type" });
             DrawTable.PrintRow(new string[] { "", "", "", "" });
-            foreach (var empl in _storage.GetAllEmployee())
+
+            var compSalaryService = _container.Resolve<ICompanySalaryService>();
+            var emplService = _container.Resolve<IEmployeeService>();
+            foreach (var empl in emplService.GetAllEmployees())
             {
                 DrawTable.PrintRow(new string[] { empl.Name,
-                    string.Format("{0:0.00}", service.GetActualSalary(empl)),
+                    string.Format("{0:0.00}", compSalaryService.GetActualSalaryOfAnyType(empl)),
                     empl.StartWorkingDate.ToString("dd/MM/yyyy"),
                     empl.Type.ToString() });
             }
-            var sum = string.Format("{0:0.00}", service.GetSalaryOfAllCompany());
+
+            var sum = string.Format("{0:0.00}", compSalaryService.GetSalaryOfAllCompany());
             Console.WriteLine($"Total: {sum}");
         }
 

@@ -3,7 +3,7 @@ using System;
 
 namespace Company.SalaryModule.Services.Interfaces
 {
-    interface ISalesSalaryService
+    public interface ISalesSalaryService
     {
         decimal GetSalesActualSalary(Sales sales, DateTime? salaryDate = null);
     }

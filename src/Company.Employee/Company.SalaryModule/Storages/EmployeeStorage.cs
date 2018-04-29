@@ -1,4 +1,5 @@
 ﻿using Company.SalaryModule.Classes;
+using Company.SalaryModule.Enums;
 using Company.SalaryModule.Storages.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,19 @@ namespace Company.SalaryModule.Storages
         }
         public List<EmployeeBase> GetAllEmployee()
         {
-            return _employeesList;
+            var allEmployeeList = new List<EmployeeBase>();
+            allEmployeeList.AddRange(_employeesList);
+            _employeesList.ForEach(empl => allEmployeeList.AddRange(GetSubordinates(empl as ManagerBase)));
+
+            return allEmployeeList;
+        }
+
+        private List<EmployeeBase> GetSubordinates(ManagerBase manager)
+        {
+            if (manager == null)
+                return new List<EmployeeBase>();
+
+            return manager.SubordinatesList;
         }
 
         public EmployeeBase GetEmployeByName(string name)

@@ -8,5 +8,7 @@ namespace Company.SalaryModule.Services.Interfaces
         List<EmployeeBase> GetAllEmployees();
 
         EmployeeBase GetEmployeeByName(string name);
+
+        void SaveEmployee(EmployeeBase employee);
     }
 }

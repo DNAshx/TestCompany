@@ -27,5 +27,10 @@ namespace Company.SalaryModule.Services
 
             return _employeeStorage.GetEmployeByName(name);
         }       
+
+        public void SaveEmployee(EmployeeBase employee)
+        {
+            _employeeStorage.SaveEmployee(employee);
+        }
     }
 }

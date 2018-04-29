@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Classes\Employee.cs" />
     <Compile Include="Classes\Manager.cs" />
     <Compile Include="Classes\Company.cs" />
@@ -51,6 +52,11 @@
     <Compile Include="Constants\AdditionsConstants.cs" />
     <Compile Include="Constants\LimitsConstants.cs" />
     <Compile Include="Enums\EmployeeTypeEnum.cs" />
+    <Compile Include="IoC\IContainer.cs" />
+    <Compile Include="IoC\LifeCycle.cs" />
+    <Compile Include="IoC\RegisteredObject.cs" />
+    <Compile Include="IoC\SimpleIocContainer.cs" />
+    <Compile Include="IoC\TypeNotRegisteredException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Interfaces\ICompanySalaryService.cs" />
     <Compile Include="Services\Interfaces\IEmployeeSalaryService.cs" />

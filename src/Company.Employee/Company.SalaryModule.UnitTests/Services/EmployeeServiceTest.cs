@@ -5,10 +5,9 @@ using Company.SalaryModule.Services;
 using Company.SalaryModule.Storages.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using Xunit;
 
 
-namespace Company.SalaryModule.UnitTests
+namespace Company.SalaryModule.UnitTests.Services
 {
     [TestClass]
     public class EmployeeServiceTest
@@ -22,7 +21,7 @@ namespace Company.SalaryModule.UnitTests
             _service = new EmployeeService(_employeeStorage);            
         }
 
-        [Fact]
+        [TestMethod]
         public void GetAllEmployees_Success()
         {
             //Arrange
