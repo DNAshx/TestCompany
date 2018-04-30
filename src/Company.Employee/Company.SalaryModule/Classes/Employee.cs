@@ -1,14 +1,23 @@
-﻿using Company.SalaryModule.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Company.SalaryModule.Classes
 {
     public class Employee : EmployeeBase
     {
-        public override EmployeeTypeEnum Type { get => EmployeeTypeEnum.Employee; }
+        public const decimal EMPL_ADDITION = 0.03m;
+        public const decimal EMPL_MAXYEARADD = 0.3m;
+
+        public Employee(string name, decimal baseSalary, DateTime startWorkingDate) 
+            : base(name, baseSalary, startWorkingDate)
+        {
+        }
+
+        public override decimal CalculateActualSalary(DateTime? salaryDate = null)
+        {
+            if (!salaryDate.HasValue)
+                salaryDate = DateTime.Now;
+            
+            return _baseSalary * GetAdditionToSalaryInPercent(EMPL_ADDITION, EMPL_MAXYEARADD, salaryDate);
+        }
     }
 }

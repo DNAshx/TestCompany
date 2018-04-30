@@ -1,24 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Company.SalaryModule.Classes
 {
     public class ManagerBase : EmployeeBase
     {
-        private List<EmployeeBase> _subordinatesList;
-        public List<EmployeeBase> SubordinatesList
+        private List<EmployeeBase> _subordinatesList = new List<EmployeeBase>();
+
+        public ManagerBase(string name, decimal baseSalary, DateTime startWorkingDate)
+            : base(name, baseSalary, startWorkingDate)
         {
-            get
-            {
-                return _subordinatesList == null ? (_subordinatesList = new List<EmployeeBase>()) : _subordinatesList;
-            }
-            set
-            {
-                _subordinatesList = value;
-            }
+        }
+
+        public void AddSubordinate(EmployeeBase subordinate)
+        {
+            _subordinatesList.Add(subordinate);
+        }
+
+        public List<EmployeeBase> GetSubordinates()
+        {
+            return _subordinatesList;
+        }
+        
+        protected decimal GetSubordinatesSalary(DateTime salaryDate)
+        {
+            var sumSalary = 0m;
+            _subordinatesList.ForEach(empl => sumSalary += empl.CalculateActualSalary(salaryDate));
+
+            return sumSalary;
         }
     }
 }

@@ -62,8 +62,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\EmployeeTest.cs" />
+    <Compile Include="Classes\ManagerTest.cs" />
+    <Compile Include="Classes\SalesTest.cs" />
     <Compile Include="Services\SalaryServiceTest.cs" />
-    <Compile Include="Services\EmployeeServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

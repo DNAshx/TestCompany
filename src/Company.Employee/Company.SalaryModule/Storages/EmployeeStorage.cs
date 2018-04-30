@@ -1,83 +1,60 @@
 ﻿using Company.SalaryModule.Classes;
-using Company.SalaryModule.Enums;
 using Company.SalaryModule.Storages.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Company.SalaryModule.Storages
 {
     public class EmployeeStorage : IEmployeeStorage
     {
-        private List<EmployeeBase> _employeesList;
+        private ICompanyStorage _companyStorage;
 
-        public EmployeeStorage()
+        public EmployeeStorage(ICompanyStorage companyStorage)
         {
-            _employeesList = new List<EmployeeBase>()
-            {
-                new Employee()
-                {
-                    Name = "Employee 1",
-                    BaseSalary = 300,
-                    StartWorkingDate = new DateTime(2013, 07, 22)
-                },
-                new Manager()
-                {
-                    Name = "Manager 1",
-                    BaseSalary = 500,
-                    StartWorkingDate = new DateTime(2015, 03, 01),
-                    SubordinatesList = new List<EmployeeBase>()
-                    {
-                        new Employee()
-                        {
-                            Name = "Employee 2",
-                            BaseSalary = 250,
-                            StartWorkingDate = new DateTime(2017, 11, 20)
-                        }
-                    }
-                },
-                new Sales()
-                {
-                    Name = "Sales 1",
-                    BaseSalary = 400,
-                    StartWorkingDate = new DateTime(2015, 03, 01),
-                    SubordinatesList = new List<EmployeeBase>()
-                    {
-                        new Employee()
-                        {
-                            Name = "Employee 3",
-                            BaseSalary = 350,
-                            StartWorkingDate = new DateTime(2011, 10, 12)
-                        }
-                    }
-                }
-            };
-        }
-        public List<EmployeeBase> GetAllEmployee()
-        {
-            var allEmployeeList = new List<EmployeeBase>();
-            allEmployeeList.AddRange(_employeesList);
-            _employeesList.ForEach(empl => allEmployeeList.AddRange(GetSubordinates(empl as ManagerBase)));
+            _companyStorage = companyStorage;
 
-            return allEmployeeList;
+            Initilize();            
         }
 
-        private List<EmployeeBase> GetSubordinates(ManagerBase manager)
+        private void Initilize()
         {
-            if (manager == null)
-                return new List<EmployeeBase>();
-
-            return manager.SubordinatesList;
+            InitializeCompany();
+            InitializeEmployees();
         }
 
-        public EmployeeBase GetEmployeByName(string name)
+        private void InitializeCompany()
         {
-            return _employeesList.FirstOrDefault(e => e.Name.ToUpper().Equals(name.ToUpper()));
+            _companyStorage.AddCompany(new CompanyObject("Company 1"));
+            _companyStorage.AddCompany(new CompanyObject("Company 2"));            
         }
 
-        public void SaveEmployee(EmployeeBase employee)
+        private void InitializeEmployees()
         {
-            _employeesList.Add(employee);
+            var companyList = _companyStorage.GetAllCompanies();
+
+            var empl = new EmployeeBase("1", 1, DateTime.Today);
+            empl = new Employee("Employee 1 Comp1", 300, new DateTime(2013, 07, 22));
+            companyList[0].AddEmployeeWithSubordinates(empl);
+
+            empl = new Manager("Manager 1 Comp1", 500, new DateTime(2015, 03, 01));
+            var subEmpl = new Employee("Employee 2 COmp1", 250, new DateTime(2017, 11, 20));
+            ((ManagerBase)empl).AddSubordinate(subEmpl);
+            companyList[0].AddEmployeeWithSubordinates(empl);
+
+            empl = new Sales("Sales 1 Comp1", 400, new DateTime(2015, 03, 01));
+            subEmpl = new Employee("Employee 3 Comp1", 350, new DateTime(2011, 10, 12));
+            ((ManagerBase)empl).AddSubordinate(subEmpl);
+            companyList[0].AddEmployeeWithSubordinates(empl);
+
+            empl = new Employee("Employee 1 Comp 2", 300, new DateTime(2013, 07, 22));
+            companyList[1].AddEmployeeWithSubordinates(empl);
+
+            empl = new Manager("Manager 1 Comp2", 500, new DateTime(2015, 03, 01));
+            companyList[1].AddEmployeeWithSubordinates(empl);            
+        }
+
+        public void SaveEmployee(EmployeeBase employee, CompanyObject company)
+        {
+            company.AddEmployeeWithSubordinates(employee);
         }
     }
 }
