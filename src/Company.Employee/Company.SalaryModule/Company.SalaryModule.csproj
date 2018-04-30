@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="EmployeeBootstrapper.cs" />
     <Compile Include="Classes\Employee.cs" />
     <Compile Include="Classes\Manager.cs" />
     <Compile Include="Classes\Company.cs" />

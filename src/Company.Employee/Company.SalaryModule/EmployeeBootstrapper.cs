@@ -19,14 +19,14 @@ namespace Company.SalaryModule
 
         private void Initialize()
         {
-            Container.Register<ICompanySalaryService, SalaryService>(LifeCycle.Singleton);
-            Container.Register<IEmployeeSalaryService, SalaryService>(LifeCycle.Singleton);
-            Container.Register<IManagerSalaryService, SalaryService>(LifeCycle.Singleton);
-            Container.Register<ISalesSalaryService, SalaryService>(LifeCycle.Singleton);
+            Container.Register<ICompanySalaryService, SalaryService>();
+            Container.Register<IEmployeeSalaryService, SalaryService>();
+            Container.Register<IManagerSalaryService, SalaryService>();
+            Container.Register<ISalesSalaryService, SalaryService>();
 
-            Container.Register<IEmployeeService, EmployeeService>(LifeCycle.Singleton);
+            Container.Register<IEmployeeService, EmployeeService>();
 
-            Container.Register<IEmployeeStorage, EmployeeStorage>(LifeCycle.Singleton);            
+            Container.Register<IEmployeeStorage, EmployeeStorage>();
         }
     }
 }

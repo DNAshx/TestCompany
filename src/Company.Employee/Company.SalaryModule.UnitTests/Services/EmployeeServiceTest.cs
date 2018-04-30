@@ -53,7 +53,8 @@ namespace Company.SalaryModule.UnitTests.Services
             result = _service.GetAllEmployees();
 
             //Assert
-            Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedList.Count, result.Count);
+            Assert.AreEqual(expectedList.Count, result.Count);
+            CollectionAssert.AreEqual(expectedList, result);
         }   
     }
 }

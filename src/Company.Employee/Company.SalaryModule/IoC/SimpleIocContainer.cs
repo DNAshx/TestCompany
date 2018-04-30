@@ -36,6 +36,7 @@ namespace Company.SalaryModule.IoC
                 throw new TypeNotRegisteredException(string.Format(
                     "The type {0} has not been registered", typeToResolve.Name));
             }
+
             return GetInstance(registeredObject);
         }
 
@@ -47,6 +48,7 @@ namespace Company.SalaryModule.IoC
                 var parameters = ResolveConstructorParameters(registeredObject);
                 registeredObject.CreateInstance(parameters.ToArray());
             }
+
             return registeredObject.Instance;
         }
 
