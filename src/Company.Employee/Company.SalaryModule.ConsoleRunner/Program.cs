@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace Company.SalaryModule.Runner
+namespace Company.SalaryModule.ConsoleRunner
 {
     class Program
     {

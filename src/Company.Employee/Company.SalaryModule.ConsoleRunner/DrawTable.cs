@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System;
 
-namespace Company.SalaryModule.Runner
+namespace Company.SalaryModule.ConsoleRunner
 {
     /// <summary>
     /// Copy pasted from https://stackoverflow.com/questions/856845/how-to-best-way-to-draw-table-in-console-app-c
@@ -27,7 +24,7 @@ namespace Company.SalaryModule.Runner
             {
                 row += AlignCentre(column, width) + "|";
             }
-
+            
             Console.WriteLine(row);
         }
 

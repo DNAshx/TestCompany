@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F8129988
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule.UnitTests", "Company.SalaryModule.UnitTests\Company.SalaryModule.UnitTests.csproj", "{9B173F5E-3FDD-4660-BEDE-5DA09C2C8337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule.Runner", "Company.SalaryModule.Runner\Company.SalaryModule.Runner.csproj", "{FC20BAF0-CB39-4E2A-950E-FD681420609C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule.ConsoleRunner", "Company.SalaryModule.ConsoleRunner\Company.SalaryModule.ConsoleRunner.csproj", "{FC20BAF0-CB39-4E2A-950E-FD681420609C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

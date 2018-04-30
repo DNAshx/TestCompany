@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FC20BAF0-CB39-4E2A-950E-FD681420609C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Company.SalaryModule.Runner</RootNamespace>
-    <AssemblyName>Company.SalaryModule.Runner</AssemblyName>
+    <RootNamespace>Company.SalaryModule.ConsoleRunner</RootNamespace>
+    <AssemblyName>Company.SalaryModule.ConsoleRunner</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Company.SalaryModule.ConsoleRunner.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
