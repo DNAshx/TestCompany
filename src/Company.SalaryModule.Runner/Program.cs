@@ -13,6 +13,10 @@ namespace Company.SalaryModule.ConsoleRunner
     {
         private static Container _container;
         private static CompanyObject _currentCompany;
+        private const char mngrChar = 'M';
+        private const char slsChar = 'S';
+        private const char emplChar = 'E';
+        private const char charEmpty = ' ';
 
         static void Main(string[] args)
         {
@@ -52,7 +56,8 @@ namespace Company.SalaryModule.ConsoleRunner
                 Console.WriteLine($"You selected '{_currentCompany.Name}'.");
 
                 var empl = GetEmployee();
-                AddEmployee(empl);
+                if (empl != null)
+                    AddEmployee(empl);
             }
             
             //print results
@@ -76,22 +81,25 @@ namespace Company.SalaryModule.ConsoleRunner
             //type
             var employeeType = GetEmployeeType();
 
+            if (employeeType.Equals(charEmpty))
+                return null;
+
             var employee = new EmployeeBase();
 
             switch (employeeType)
             {
-                case EmployeeTypeEnum.Employee:
+                case emplChar:
                     employee = new Employee(name, baseSalary, startWorkingDate);
                     break;
-                case EmployeeTypeEnum.Manager:
+                case mngrChar:
                     employee = new Manager(name, baseSalary, startWorkingDate);
                     break;
-                case EmployeeTypeEnum.Sales:
+                case slsChar:
                     employee = new Sales(name, baseSalary, startWorkingDate);
                     break;
             }
 
-            if (employeeType == EmployeeTypeEnum.Manager || employeeType == EmployeeTypeEnum.Sales)
+            if (employeeType.Equals(mngrChar) || employeeType.Equals(slsChar))
             { 
                 var flag = false;
                 while (!flag)
@@ -101,7 +109,9 @@ namespace Company.SalaryModule.ConsoleRunner
                     flag = result.ToUpper().Equals("N");
                     if (!flag)
                     {
-                        ((ManagerBase)employee).AddSubordinate(GetEmployee());
+                        var subordinate = GetEmployee();
+                        if (subordinate != null)
+                            ((ManagerBase)employee).AddSubordinate(subordinate);
                     }
                 }                
             }
@@ -114,35 +124,31 @@ namespace Company.SalaryModule.ConsoleRunner
             _currentCompany.AddEmployeeWithSubordinates(employee);
         }
 
-        private static EmployeeTypeEnum GetEmployeeType()
+        private static char GetEmployeeType()
         {
-            var flag = false;
+            Console.Write($"Select employee type (M)anager, (E)mployee, (S)ales:");
 
-            while (!flag)
+            var emplType = Console.ReadLine().FirstOrDefault();
+            switch (Char.ToUpper(emplType))
             {
-                Console.Write($"Select employee type (M)anager, (E)mployee, (S)ales:");
-
-                var emplType = Console.ReadLine().FirstOrDefault();
-                switch (Char.ToUpper(emplType))
-                {
-                    case 'M':
-                        return EmployeeTypeEnum.Manager;
-
-                    case 'E':
-                        return EmployeeTypeEnum.Employee;
-
-                    case 'S':
-                        return EmployeeTypeEnum.Sales;
-                }
-
-                Console.Write($"Incorrect type (M)anager, (E)mployee, (S)ales (Enter - continue, Esq to exit)");
-
-                var key = Console.ReadKey();
-                if (key.Key == ConsoleKey.Escape)
-                    return EmployeeTypeEnum.Empty;
+                case mngrChar:
+                case emplChar:
+                case slsChar:
+                    return Char.ToUpper(emplType);
             }
 
-            return EmployeeTypeEnum.Empty;
+            Console.Write($"Incorrect type (M)anager, (E)mployee, (S)ales (Enter - continue, Esq to exit)");
+
+            var key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Escape)
+            {
+                Console.WriteLine($"Employee not saved");
+                return charEmpty;
+            }
+
+            Console.WriteLine();
+
+            return GetEmployeeType();
         }
 
         private static T GetData<T>(string dataName, string formatString)

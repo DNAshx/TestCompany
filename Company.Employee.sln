@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule", "Company.SalaryModule\Company.SalaryModule.csproj", "{ADF68F81-2EC0-4234-BBB1-6A8BD60A2138}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule", "src\Company.SalaryModule\Company.SalaryModule.csproj", "{ADF68F81-2EC0-4234-BBB1-6A8BD60A2138}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F8129988-AF13-4E2B-85FB-9A67873AE0E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule.UnitTests", "Company.SalaryModule.UnitTests\Company.SalaryModule.UnitTests.csproj", "{9B173F5E-3FDD-4660-BEDE-5DA09C2C8337}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule.UnitTests", "tests\Company.SalaryModule.UnitTests\Company.SalaryModule.UnitTests.csproj", "{9B173F5E-3FDD-4660-BEDE-5DA09C2C8337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule.ConsoleRunner", "Company.SalaryModule.Runner\Company.SalaryModule.ConsoleRunner.csproj", "{FC20BAF0-CB39-4E2A-950E-FD681420609C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Company.SalaryModule.ConsoleRunner", "src\Company.SalaryModule.Runner\Company.SalaryModule.ConsoleRunner.csproj", "{FC20BAF0-CB39-4E2A-950E-FD681420609C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
