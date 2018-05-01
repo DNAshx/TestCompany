@@ -9,6 +9,18 @@ namespace Company.SalaryModule.Storages
     {
         private List<CompanyObject> _companyList = new List<CompanyObject>();
 
+        public CompanyStorage ()
+        {
+            Initilize();
+        }
+
+        private void Initilize()
+        {
+            AddCompany(new CompanyObject("Company 1"));
+            AddCompany(new CompanyObject("Company 2"));
+        }
+
+
         public List<CompanyObject> GetAllCompanies()
         {
             return _companyList;

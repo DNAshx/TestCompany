@@ -16,9 +16,15 @@ namespace Company.SalaryModule.Classes
             return _baseSalary;
         }
 
+        /// <summary>
+        /// Initialize employee without name, salary = 0 and startworkDate is today
+        /// </summary>
         public EmployeeBase()
         {
-
+            Id = Guid.NewGuid();
+            Name = "";
+            _baseSalary = 0;
+            StartWorkingDate = DateTime.Today;
         }
 
         public EmployeeBase(string name, decimal baseSalary, DateTime startWorkingDate)

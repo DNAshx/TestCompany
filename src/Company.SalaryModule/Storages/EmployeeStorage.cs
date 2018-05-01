@@ -16,17 +16,11 @@ namespace Company.SalaryModule.Storages
         }
 
         private void Initilize()
-        {
-            InitializeCompany();
+        {            
             InitializeEmployees();
         }
 
-        private void InitializeCompany()
-        {
-            _companyStorage.AddCompany(new CompanyObject("Company 1"));
-            _companyStorage.AddCompany(new CompanyObject("Company 2"));            
-        }
-
+        
         private void InitializeEmployees()
         {
             var companyList = _companyStorage.GetAllCompanies();

@@ -23,6 +23,9 @@ namespace Company.SalaryModule
             
             Container.Register<IEmployeeStorage, EmployeeStorage>(Lifestyle.Singleton);
             Container.Register<ICompanyStorage, CompanyStorage>(Lifestyle.Singleton);
+
+            //initialize dummy data
+            Container.GetInstance<IEmployeeStorage>();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Company.SalaryModule.ConsoleRunner
             //Initializing
             var bootStrapper = new EmployeeBootstrapper();
             _container = bootStrapper.Container;
-            var employee = _container.GetInstance<IEmployeeStorage>();
+
             var companyStorage = _container.GetInstance<ICompanyStorage>();
 
             //get and add employees to the storage
